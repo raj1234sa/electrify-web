@@ -7,9 +7,26 @@
 @endsection
 @section('main-body')
     <div class="table-responsive">
-        <table id="dataTable" class="ajax table table-striped table-hover" data-load='get-services-list-ajax'>
+        <form id="filterForm">
+            <div class="row">
+                <div class="col-xs-1 lbl-search-box">
+                    <label>Search: </label>
+                </div>
+                <div class="col-xs-2">
+                    <input type="text" id="keyword">
+                </div>
+                <div class="col-xs-2">
+                    <button type="button" class="btn btn-primary btn-sm" id="search">
+                        <i class="ace-icon fa fa-search bigger-110"></i>Search
+                    </button>
+                    <button type="button" id="reset" class="btn btn-sm">Reset</button>
+                </div>
+            </div>
+        </form>
+        <table id="dataTable" class="ajax table table-striped table-hover" data-checkbox="true" data-load='get-services-list-ajax'>
             <thead>
                 <tr>
+                    <th class="text-center" width='1px'><input name='form-field-checkbox' type='checkbox' id ='table_select_all' class='ace'><span class='lbl'></span></th>
                     <th class="text-center">Sr</th>
                     <th>Name</th>
                     <th>Price</th>
@@ -22,5 +39,8 @@
     <div id="grid-pager"></div>
 @endsection
 @section('js')
-    
+    <script>
+        var tabletools = ['export', 'print'];
+        var exportRoute = 'services-export';
+    </script>
 @endsection

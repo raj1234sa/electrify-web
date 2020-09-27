@@ -44,7 +44,7 @@ class FirebaseController extends Controller
     }
 
     static function orderBy($columnName, $direction) {
-        self::$database->orderBy($columnName, $direction);
+        self::$database = self::$database->orderBy($columnName, $direction);
     }
 
     static function deleteDocument() {

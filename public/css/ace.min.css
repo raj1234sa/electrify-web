@@ -2304,7 +2304,7 @@ pre.prettyprint {
     vertical-align: sub;
     text-align: center;
     font-size: 18px;
-    font-weight: 400
+    /* font-weight: 400 */
 }
 
 .nav-list>li:before {
@@ -2383,7 +2383,7 @@ pre.prettyprint {
 .nav-list>li .submenu>li a>.menu-icon {
     display: none;
     font-size: 12px;
-    font-weight: 400;
+    /* font-weight: 400; */
     width: 18px;
     height: auto;
     line-height: 12px;
@@ -2612,13 +2612,13 @@ body.mob-safari .sidebar.sidebar-fixed {
 }
 
 .sidebar .sidebar-toggle>.ace-icon {
-    padding: 0 5px;
-    line-height: 18px;
+    padding: 0 6px;
+    line-height: 22px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 12px;
     border-radius: 100%;
     border: 1px solid;
-    position: relative
+    position: relative;
 }
 
 .sidebar .sidebar-toggle:before {
@@ -5382,18 +5382,19 @@ body.mob-safari .sidebar.sidebar-fixed {
 }
 
 .breadcrumb>li+li:before {
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     font-size: 14px;
     content: "\f105";
     color: #B2B6BF;
     padding: 0;
     margin: 0 8px 0 0;
     position: relative;
-    top: 1px
+    top: 1px;
+    font-weight: 900;
 }
 
 .breadcrumb .home-icon {
-    font-size: 20px;
+    /* font-size: 20px; */
     margin-left: 2px;
     margin-right: 2px;
     vertical-align: top
@@ -9422,7 +9423,7 @@ screen and (min--moz-device-pixel-ratio:1.2) and (max--moz-device-pixel-ratio:1.
 .dropdown-colorpicker>.dropdown-menu>li>.colorpick-btn.selected:after {
     content: "\f00c";
     display: inline-block;
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     font-size: 11px;
     color: #FFF;
     position: absolute;
@@ -10173,8 +10174,8 @@ input[type=radio].ace+.lbl {
 input[type=checkbox].ace+.lbl::before,
 input[type=radio].ace+.lbl::before {
     cursor: pointer;
-    font-family: fontAwesome;
-    font-weight: 400;
+    font-family: "Font Awesome 5 Free";
+    /* font-weight: 400; */
     font-size: 12px;
     color: #FFF;
     content: "\a0";
@@ -10196,6 +10197,7 @@ input[type=checkbox].ace:checked+.lbl::before,
 input[type=radio].ace:checked+.lbl::before {
     display: inline-block;
     content: '\f00c';
+    font-weight: 900;
     color: #32A3CE;
     background-color: #F5F8FC;
     border-color: #ADB8C0;
@@ -10253,7 +10255,7 @@ input[type=radio].ace[disabled]+.lbl::before {
 input[type=radio].ace+.lbl::before {
     border-radius: 100%;
     font-size: 10px;
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     text-shadow: 0 0 1px #32A3CE;
     line-height: 15px;
     height: 17px;
@@ -10361,7 +10363,7 @@ input[type=checkbox].ace.ace-switch.ace-switch-2+.lbl::before {
 }
 
 input[type=checkbox].ace.ace-switch.ace-switch-3+.lbl::after {
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     font-size: 13px;
     line-height: 22px;
     content: "\f00d";
@@ -10450,7 +10452,7 @@ input[type=checkbox].ace.ace-switch.ace-switch-6+.lbl {
 }
 
 input[type=checkbox].ace.ace-switch.ace-switch-6+.lbl::before {
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     content: "\f00d";
     text-shadow: 0 -1px 0 rgba(0, 0, 0, .25);
     box-shadow: none;
@@ -10460,6 +10462,7 @@ input[type=checkbox].ace.ace-switch.ace-switch-6+.lbl::before {
     border-radius: 12px;
     display: inline-block;
     background-color: red;
+    font-weight: 900;
     color: #F2F2F2;
     width: 52px;
     height: 22px;
@@ -10534,7 +10537,7 @@ input[type=checkbox].ace.ace-switch.ace-switch-7+.lbl::before {
 
 input[type=checkbox].ace.ace-switch.ace-switch-7+.lbl::after {
     content: '\f00d';
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     font-size: 16px;
     position: absolute;
     top: 3px;
@@ -10739,7 +10742,7 @@ input.ace+.lbl.padding-0::before {
     line-height: 24px;
     width: 26px;
     text-align: center;
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     font-size: 13px;
     border: 2px solid #FFF;
     color: #FFF;
@@ -10890,7 +10893,7 @@ input.ace+.lbl.padding-0::before {
     bottom: 0;
     width: 26px;
     text-align: center;
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     font-size: 13px;
     border: 2px solid #FFF;
     color: #FFF;
@@ -16567,9 +16570,9 @@ div.dataTables_scrollFoot table {
     float: right;
     display: inline;
     content: "\f0dc";
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     font-size: 13px;
-    font-weight: 400;
+    /* font-weight: 400; */
     color: #555
 }
 
@@ -16948,7 +16951,7 @@ div.dataTables_processing {
     content: "\f00d";
     display: inline-block;
     color: #888;
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     font-size: 13px;
     position: absolute;
     right: 0;
@@ -16975,7 +16978,7 @@ div.dataTables_processing {
     content: "\f0d7";
     display: inline-block;
     color: #888;
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     font-size: 12px;
     position: relative;
     top: -1px;
@@ -17001,7 +17004,7 @@ div.dataTables_processing {
     content: "\f002";
     display: inline-block;
     color: #888;
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     font-size: 14px;
     position: absolute;
     top: 8px;
@@ -17021,7 +17024,7 @@ div.dataTables_processing {
     content: "\f00d";
     display: inline-block;
     color: #888;
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     font-size: 13px;
     position: absolute;
     right: 2px;
@@ -17042,7 +17045,7 @@ div.dataTables_processing {
     content: "\f0d7";
     display: inline-block;
     color: #888;
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     font-size: 12px;
     position: relative;
     top: -1px;
@@ -17062,7 +17065,7 @@ div.dataTables_processing {
 .chosen-rtl .chosen-search:before,
 .select2-search:before {
     content: "\f002";
-    font-family: FontAwesome
+    font-family: "Font Awesome 5 Free"
 }
 
 .chosen-rtl .chosen-search:before {
@@ -17324,7 +17327,7 @@ only screen and (min-resolution:144dpi) {
 
 .select2-container .select2-choice abbr:before,
 .select2-search-choice-close:before {
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     font-size: 12px;
     display: inline;
     content: "\f00d";
@@ -17386,7 +17389,7 @@ only screen and (min-resolution:144dpi) {
 }
 
 .select2-container .select2-choice .select2-arrow b:before {
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     font-size: 12px;
     display: inline;
     content: "\f0d7";
@@ -17405,7 +17408,7 @@ only screen and (min-resolution:144dpi) {
 }
 
 .select2-search-field .select2-search:after {
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     font-size: 14px;
     display: inline;
     content: "\f002";
@@ -17846,7 +17849,7 @@ only screen and (min-resolution:144dpi) {
     border-radius: 100%;
     content: "\f00c";
     z-index: 3;
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     font-size: 17px;
     color: #87BA21
 }
@@ -18336,7 +18339,7 @@ only screen and (min-resolution:144dpi) {
 }
 
 .gritter-close:before {
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     font-size: 16px;
     content: "\f00d"
 }
@@ -18887,7 +18890,7 @@ img.editable-click:hover {
 .editable-clear-x:before {
     display: inline-block;
     content: "\f057";
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     font-size: 15px;
     position: absolute;
     margin-top: -9px;
@@ -19340,7 +19343,7 @@ img.editable-click:hover {
 .ui-datepicker .ui-datepicker-next:before,
 .ui-datepicker .ui-datepicker-prev:before {
     display: inline;
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     font-size: 14px;
     content: "\f060";
     color: #393939
@@ -19488,7 +19491,7 @@ img.editable-click:hover {
 .ui-jqdialog .ui-jqdialog-titlebar-close:before {
     content: "\f00d";
     display: inline;
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     font-size: 16px
 }
 
@@ -19546,7 +19549,7 @@ img.editable-click:hover {
 
 .ui-accordion .ui-accordion-header .ui-accordion-header-icon:before {
     display: inline;
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     font-size: 15px;
     content: "\f0da"
 }
@@ -19653,7 +19656,7 @@ img.editable-click:hover {
 
 .ui-menu .ui-menu-item .ui-menu-icon:before {
     content: "\f105";
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     font-size: 14px;
     display: inline
 }
@@ -19661,7 +19664,7 @@ img.editable-click:hover {
 .ui-grid-ico-sort:before,
 .ui-selectmenu-button .ui-icon:before {
     content: "\f0d7";
-    font-family: FontAwesome
+    font-family: "Font Awesome 5 Free"
 }
 
 .ui-menu .ui-menu-item:hover,
@@ -20128,7 +20131,7 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 }
 
 .ui-pg-div .ui-icon:before {
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     display: inline
 }
 
@@ -20465,7 +20468,7 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 
 .ui-jqgrid .ui-jqgrid-titlebar-close .ui-icon:before {
     display: inline-block;
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     content: "\f077";
     color: #FFF
 }
@@ -20719,14 +20722,14 @@ th[aria-selected=true] .ui-jqgrid-sortable {
 }
 
 .dd-item>button:before {
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     content: '\f067';
     display: block;
     position: absolute;
     width: 100%;
     text-align: center;
     text-indent: 0;
-    font-weight: 400;
+    /* font-weight: 400; */
     font-size: 14px
 }
 
@@ -20987,10 +20990,10 @@ input.typeahead.scrollable~.tt-menu {
     font-size: 2em;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
-    font-family: FontAwesome;
+    font-family: "Font Awesome 5 Free";
     font-style: normal;
     font-variant: normal;
-    font-weight: 400;
+    /* font-weight: 400; */
     line-height: 1;
     speak: none;
     text-transform: none;

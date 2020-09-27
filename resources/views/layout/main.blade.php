@@ -10,7 +10,7 @@
     $backlink = urlencode(DIR_HTTP_CURRENT_PAGE);
 @endphp
 @if($adminobj == "")
-    <script>
+    	<script>
 		var backlink = "{{ $backlink }}";
 		window.location = "/?redirecturl="+backlink;
 	</script>
@@ -24,11 +24,12 @@
 		<meta name="description" content="Common Buttons &amp; Icons" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 		<link rel="stylesheet" href="{{DIR_HTTP_CSS}}bootstrap.min.css" />
-		<link rel="stylesheet" href="{{DIR_HTTP_HOME}}font-awesome/4.5.0/css/font-awesome.min.css" />
+		{{-- <link rel="stylesheet" href="{{DIR_HTTP_HOME}}font-awesome/4.5.0/css/font-awesome.min.css" /> --}}
+		<link rel="stylesheet" href="{{DIR_HTTP_CSS}}fa/css/all.min.css" />
 		<link rel="stylesheet" href="{{DIR_HTTP_CSS}}bootstrap-duallistbox.min.css" />
 		<link rel="stylesheet" href="{{DIR_HTTP_CSS}}bootstrap-multiselect.min.css" />
 		<link rel="stylesheet" href="{{DIR_HTTP_CSS}}select2.min.css" />
-		<link rel="stylesheet" href="{{DIR_HTTP_CSS}}fonts.googleapis.com.css" />
+		{{-- <link rel="stylesheet" href="{{DIR_HTTP_CSS}}fonts.googleapis.com.css" /> --}}
 		<link rel="stylesheet" href="{{DIR_HTTP_CSS}}ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
 		<link rel="stylesheet" href="{{DIR_HTTP_CSS}}ace-skins.min.css" />
 		<link rel="stylesheet" href="{{DIR_HTTP_CSS}}ace-rtl.min.css" />
@@ -85,7 +86,7 @@
 					<ul class="nav ace-nav">
 						<li class="light-blue dropdown-modal">
 							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
-								<img class="nav-user-photo" src="{{DIR_HTTP_IMAGES}}avatars/user.jpg" alt="Jason's Photo" />
+								<img class="nav-user-photo" src="{{DIR_HTTP_IMAGES}}avatars/admin.png" alt="Jason's Photo" />
 								<span class="user-info">
 									<small>Welcome,</small>
 									{{ ($adminobj) ? $adminobj['displayName'] : '' }}
@@ -141,7 +142,7 @@
 						</button>
 
 						<button class="btn btn-info">
-							<i class="ace-icon fa fa-pencil"></i>
+							<i class="ace-icon fas fa-pencil-alt"></i>
 						</button>
 
 						<button class="btn btn-warning">
@@ -175,7 +176,7 @@
 					@endif
 					<li class="{{$dashboard}}">
 						<a href="{{ URL::to('dashboard') }}">
-							<i class="menu-icon fa fa-tachometer"></i>
+							<i class="menu-icon fas fa-tachometer-alt"></i>
 							<span class="menu-text">Dashboard</span>
 						</a>
 					</li>
@@ -199,7 +200,7 @@
 						<ul class="submenu">
 							<li class="{{$servicelist}}">
 								<a href="{{URL::to('service-list')}}">
-									<i class="menu-icon fa fa-caret-right"></i>
+									<i class="menu-icon fas fa-caret-right"></i>
 									Services
 								</a>
 							</li>
@@ -296,7 +297,7 @@
 							<h1>
 								@yield('page-header')
 							</h1>
-							<div class="text-right">
+							<div class="text-right action-buttons-div">
 								@yield('action-button')
 							</div>
 							@yield('form-action-button')
@@ -358,159 +359,14 @@
 		<script src="{{DIR_HTTP_JS}}jquery.inputlimiter.min.js"></script>
 		<script src="{{DIR_HTTP_JS}}jquery.maskedinput.min.js"></script>
 		<script src="{{DIR_HTTP_JS}}bootstrap-tag.min.js"></script>
+		<script src="{{DIR_HTTP_JS}}bootbox.js"></script>
+		<script src="{{DIR_HTTP_JS}}jquery.easypiechart.min.js"></script>
+		<script src="{{DIR_HTTP_JS}}jquery.gritter.min.js"></script>
+		<script src="{{DIR_HTTP_JS}}spin.js"></script>
+		<script src="{{DIR_HTTP_JS}}jquery.cookie.min.js"></script>
+		<script src="{{DIR_HTTP_JS}}script.js"></script>
 		<!-- inline scripts related to this page -->
-		<script>
-			var orderFalseIndex = [];
-			$("thead tr th").each(function(index) {
-				if ($(this).data('order') == false) {
-					orderFalseIndex.push(index);
-				}
-			});
-			var table = $('#dataTable.ajax').DataTable({
-				"columnDefs": [{
-					"orderable": false,
-					"targets": orderFalseIndex
-				}],
-				"processing": true,
-				"serverSide": true,
-				"createdRow": function(row, data, index) {
-					$("thead tr th").each(function(i) {
-						if ($(this).hasClass('text-center')) {
-							$(row).children(":nth-child(" + (i + 1) + ")").addClass('text-center');
-						}
-					});
-				},
-				"stateSave": true,
-				"ajax": {
-					"url": $('table').data('load'),
-					"type": "POST",
-					"data": {
-						_token: $("#csrf").val()
-					}
-				}
-			});
-			function refresh() {
-				table.ajax.reload( null, false );
-			}
-			setTimeout(function(){
-				$(".alert.alert-dismissible").children('button').click();
-			}, 4000);
-			var index = 0;
-			
-			function successMessage(message) {
-				index = index+1;
-				$("body").append("<div class='alert alert-success alert-dismissible' id='" + (index) + "'><button type='button' class='close' data-dismiss='alert'>&times;</button><strong>Success!</strong> " + message + "</div>");
-				setTimeout(()=> {
-					$(".alert#"+index).children('button').click();
-				}, 4000);
-			}
-			
-			function failMessage(message) {
-				index = index+1;
-				$("body").append("<div class='alert alert-danger alert-dismissible' id='" + (index) + "'><button type='button' class='close' data-dismiss='alert'>&times;</button><strong>Error!</strong> " + message + "</div>");
-				setTimeout(()=> {
-					$(".alert#"+index).children('button').click();
-				}, 6000);
-			}
-			$(document).ready(function() {
-				$("input").each(function() {
-					if($(this).data('type') == 'number') {
-						var value = 0;
-						var min = 1;
-						var max = 5000;
-						var step = 1;
-						if($(this).val() != '') {
-							value = $(this).val();
-						}
-						if($(this).attr('min') != undefined && $(this).attr('min') != '') {
-							min = $(this).attr('min');
-						}
-						if($(this).attr('max') != undefined && $(this).attr('max') != '') {
-							max = $(this).attr('max');
-						}
-						if($(this).attr('step') != undefined && $(this).attr('step') != '') {
-							step = $(this).attr('step');
-						}
-						$('#'+$(this).attr('id')).ace_spinner({
-							value:value,min:min,max:max,step:step, btn_up_class:'btn-info' , btn_down_class:'btn-info'
-						})
-						.closest('.ace-spinner')
-						.on('changed.fu.spinbox', function(){});
-					}
-				});
-				$("input.only-number").keydown(function(e) {
-					var key = e.charCode || e.keyCode || 0;
-					return (
-						key == 8 || 
-						key == 9 ||
-						key == 13 ||
-						key == 46 ||
-						key == 110 ||
-						key == 190 ||
-						(key >= 35 && key <= 40) ||
-						(key >= 48 && key <= 57) ||
-						(key >= 96 && key <= 105));
-				});
-				$(".formsubmit").click(function() {
-					var ids = $(this).attr('id');
-					if(ids == 'formSubmit') {
-						$("form").prepend("<input class='hide' type='text' name='save' value='1'>");
-					} else if(ids == 'formSubmitBack') {
-						$("form").prepend("<input class='hide' type='text' name='save_back' value='1'>");
-					} else if(ids == 'backBtn') {
-						$("form").prepend("<input class='hide' type='text' name='back' value='1'>");
-					}
-					$("form").submit();
-				});
-				$("#formReset").click(function() {
-					$("form").trigger('reset');
-				});
-				$(document).delegate('input.change_status.ajax', 'change', function() {
-					var url = $(this).data('url');
-					var id = $(this).parent().parent().attr('id').split(":")[1];
-					var status = '0';
-					if($(this).prop('checked')) {
-						status = '1';
-					}
-					$.ajax({
-						url: url,
-						type: 'POST',
-						data: { id: id, status: status, _token: $("#csrf").val() },
-						beforeSend: function() {
-							$(".alert.alert-dismissible").remove();
-						},
-						success: function(response) {
-							if(response == 'success') {
-								successMessage("Status is changed successfully.");
-							} else {
-								failMessage("Error while changing status.");
-							}
-						},
-						complete: function() {
-							refresh();
-						}
-					});
-				});
-				$(document).delegate('a.ajax.delete', 'click', function(e) {
-					e.preventDefault();
-					var url = $(this).attr('href');
-					$.ajax({
-						url: url,
-						type: "GET",
-						success: function(response) {
-							if(response=='success') {
-								successMessage('Data is deleted successfully.');
-							} else {
-								failMessage('Error deleting data.');
-							}
-						},
-						complete: function() {
-							refresh();
-						}
-					});
-				});
-			});
-		</script>
 		@yield("js")
+		<script src="{{DIR_HTTP_JS}}table.js"></script>
 	</body>
 </html>

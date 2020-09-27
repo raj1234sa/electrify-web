@@ -1,5 +1,7 @@
 <?php
 namespace App\Http;
+
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 if ($_SERVER['HTTP_HOST'] == "localhost:8000" || $_SERVER['HTTP_HOST'] == "127.0.0.1:8000") {
     define('DIR_HTTP_CURRENT_PAGE', "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
@@ -126,7 +128,7 @@ function draw_form_buttons($submit_buttons) {
         switch ($value) {
             case 'save':
                 $html .= '<button class="btn btn-sm btn-info formsubmit" id="formSubmit">
-                            <i class="ace-icon fa fa-floppy-o"></i>
+                            <i class="ace-icon far fa-save"></i>
                             Save
                         </button>';
                 break;
@@ -150,4 +152,16 @@ function draw_form_buttons($submit_buttons) {
             </button>';
     $html .= '</div>';
     return $html;
+}
+
+function draw_table_checkbox($id) {
+    return "<input name='form-field-checkbox' type='checkbox' id ='table:$id' class='ace table_checkbox'><span class='lbl'></span>";
+}
+
+function extract_search_field(Request $request) {
+    $array = '';
+    if($request->input('data')) {
+        parse_str($request->input('data'), $array);
+    }
+    return $array;
 }

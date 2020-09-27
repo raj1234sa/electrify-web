@@ -7,6 +7,8 @@ use Illuminate\Http\Response;
 use Kreait\Firebase\Factory;
 
 use function App\Http\draw_action_menu;
+use function App\Http\draw_table_checkbox;
+use function App\Http\extract_search_field;
 
 class ServiceController extends Controller
 {
@@ -55,26 +57,32 @@ class ServiceController extends Controller
 
     public function ajaxlist(Request $request) {
         $fieldArr = array(
+            '',
             'id',
             'name',
             'price',
             'status',
         );
+        $searchArr = extract_search_field($request);
         $start = $request->input('start');
         $length = $request->input('length');
         $order = $request->input('order')[0]['column'];
         $dir = $request->input('order')[0]['dir'];
-        $search = $request->input('search')['value'];
+        if(!empty($searchArr)) {
+            $search = $searchArr['keyword'];
+        }
         FirebaseController::setCollection('services');
         FirebaseController::orderBy($fieldArr[$order], strtoupper($dir));
         $documents = FirebaseController::getData();
         $htmlArray = array();
         $counter = 0;
         $lengthCounter = 0;
-        $sr=1;
+        $sr=$start+1;
         $recCount=0;
         foreach ($documents as $key => $document) {
-            $recCount++;
+            if(empty($searchArr)) {
+                $recCount++;
+            }
             if($length == $lengthCounter) {
                 continue;
             }
@@ -85,8 +93,12 @@ class ServiceController extends Controller
                         continue;
                     }
                 }
+                if(!empty($searchArr)) {
+                    $recCount++;
+                }
                 $rec = array();
                 $rec['DT_RowId'] = 'serv:'.$service['id'];
+                $rec[] = draw_table_checkbox($service['id']);
                 $rec[] = $sr;
                 $rec[] = $service['name'];
                 $rec[] = $service['price'];
@@ -95,12 +107,12 @@ class ServiceController extends Controller
                 <span class='lbl'></span>";
                 $action_links = array();
                 $action_links['Edit'] = array(
-                    'icon'=>'fa fa-pencil-square-o',
+                    'icon'=>'far fa-edit',
                     'link'=>'add-service/'.$service['id'],
                 );
                 $action_links['Delete'] = array(
                     'class'=>'label-danger ajax delete',
-                    'icon'=>'fa fa-trash-o',
+                    'icon'=>'far fa-trash-alt',
                     'link'=>'delete-service/'.$service['id'],
                 );
                 $rec[] = draw_action_menu($action_links);

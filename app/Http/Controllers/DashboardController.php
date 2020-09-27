@@ -18,11 +18,6 @@ class DashboardController extends Controller
     {
         $breadcrumbs = array(
             array(
-                'route' => 'dsa',
-                'title' => 'Dashboard',
-                'active' => false,
-            ),
-            array(
                 'title' => 'Dashboard',
                 'active' => true,
             ),

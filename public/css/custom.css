@@ -1,3 +1,7 @@
+button, button:focus, button:active {
+    outline: none;
+}
+
 #navbar {
     position: sticky;
     top: 0;
@@ -17,9 +21,9 @@
 }
 
 .dataTables_processing {
-    background: rgba(67, 142, 185, .7) !important;
+    background: rgba(67, 142, 185, .5) !important;
     color: white !important;
-    height: 70px !important;
+    height: 80px !important;
     font-weight: bold;
     font-size: 20px;
     border: none !important;
@@ -76,7 +80,7 @@
 thead>tr,
 thead>tr>th:hover:not(.sorting_disabled) {
     color: white !important;
-    background: linear-gradient(to bottom,rgba(67, 142, 185, .6),rgba(67, 142, 185, .9)) !important;
+    background: linear-gradient(to bottom, rgba(67, 142, 185, .6), rgba(67, 142, 185, .9)) !important;
     /* background: rgba(67, 142, 185, .7) !important; */
 }
 
@@ -100,7 +104,7 @@ tbody>tr>td {
     border: 0.5px #ccc solid;
 }
 
-.action-menu li a > i {
+.action-menu li a>i {
     margin-right: 7px;
 }
 
@@ -114,7 +118,7 @@ tbody>tr>td {
 }
 
 .alert {
-    position: absolute;
+    position: fixed;
     z-index: 10;
     left: 50%;
     top: 20px;
@@ -125,4 +129,50 @@ tbody>tr>td {
 .table-responsive {
     overflow-x: unset;
     min-height: 100%;
+}
+
+#dataTable_length {
+    width: calc(100% - 27%);
+    text-align: center;
+    padding-top: 0.61em;
+}
+
+#filterForm input {
+    width: 100%;
+}
+
+#filterForm {
+    margin: 20px 0px;
+}
+
+#filterForm .row {
+    display: flex;
+    align-items: center;
+}
+
+.lbl-search-box {
+    width: auto;
+}
+
+#dataTable {
+    margin: 0 !important;
+    width: 100% !important;
+}
+
+.breadcrumb i {
+    padding: 3px;
+}
+
+.breadcrumb i:last-child {
+    margin-right: 3px;
+}
+
+.action-buttons-div a i {
+    margin-right: 5px;
+}
+
+.table-tools {
+    margin-bottom: 4px;
+    display: flex;
+    justify-content: flex-end;
 }
