@@ -1,0 +1,128 @@
+#navbar {
+    position: sticky;
+    top: 0;
+    z-index: 9;
+}
+
+#breadcrumbs {
+    position: sticky;
+    top: 45px;
+    z-index: 8;
+}
+
+#sidebar {
+    position: fixed;
+    height: 100%;
+    top: 45px;
+}
+
+.dataTables_processing {
+    background: rgba(67, 142, 185, .7) !important;
+    color: white !important;
+    height: 70px !important;
+    font-weight: bold;
+    font-size: 20px;
+    border: none !important;
+    z-index: 10;
+}
+
+.paginate_button {
+    border-radius: 0px !important;
+    margin: 0 !important;
+    border: 0.1px #ccc solid !important;
+}
+
+.paginate_button:hover {
+    background: rgba(67, 142, 185, .7) !important;
+}
+
+.paginate_button.current {
+    border: 0.1px #ccc solid !important;
+    background: rgba(67, 142, 185, .7) !important;
+    color: white !important;
+}
+
+#dataTable_next {
+    border: none !important;
+    border-bottom: 0.1px #ccc solid !important;
+    border-top: 0.1px #ccc solid !important;
+    border-right: 0.1px #ccc solid !important;
+}
+
+#dataTable_previous {
+    border: none !important;
+    border-bottom: 0.1px #ccc solid !important;
+    border-top: 0.1px #ccc solid !important;
+    border-left: 0.1px #ccc solid !important;
+}
+
+.paginate_button:not(.next):not(.previous):not(:last-child) {
+    border: none !important;
+    border-bottom: 0.1px #ccc solid !important;
+    border-top: 0.1px #ccc solid !important;
+    border-left: 0.1px #ccc solid !important;
+}
+
+#dataTable_next:not(.disabled):hover,
+#dataTable_previous:not(.disabled):hover {
+    background: rgba(67, 142, 185, .7) !important;
+}
+
+#dataTable_next.disabled,
+#dataTable_previous.disabled {
+    display: none !important;
+}
+
+thead>tr,
+thead>tr>th:hover:not(.sorting_disabled) {
+    color: white !important;
+    background: linear-gradient(to bottom,rgba(67, 142, 185, .6),rgba(67, 142, 185, .9)) !important;
+    /* background: rgba(67, 142, 185, .7) !important; */
+}
+
+thead>tr>th::after {
+    color: white !important;
+}
+
+thead>tr>th.sorting_desc,
+thead>tr>th.sorting_asc {
+    color: white !important;
+    background: rgba(67, 142, 185, .9) !important;
+}
+
+thead>tr>th {
+    color: white !important;
+    border: 1px rgba(67, 142, 185, .7) solid !important;
+}
+
+table,
+tbody>tr>td {
+    border: 0.5px #ccc solid;
+}
+
+.action-menu li a > i {
+    margin-right: 7px;
+}
+
+.label-danger {
+    color: white !important;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.alert {
+    position: absolute;
+    z-index: 10;
+    left: 50%;
+    top: 20px;
+    transform: translateX(-50%);
+    margin: 0;
+}
+
+.table-responsive {
+    overflow-x: unset;
+    min-height: 100%;
+}
