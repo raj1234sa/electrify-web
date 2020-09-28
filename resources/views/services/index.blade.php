@@ -26,7 +26,7 @@
         <table id="dataTable" class="ajax table table-striped table-hover" data-checkbox="true" data-load='get-services-list-ajax'>
             <thead>
                 <tr>
-                    <th class="text-center" width='1px'><input name='form-field-checkbox' type='checkbox' id ='table_select_all' class='ace'><span class='lbl'></span></th>
+                    <th class="text-center" width='1px'><input name='form-field-checkbox' type='checkbox' id ='table_select_all' class='ace table_checkbox'><span class='lbl'></span></th>
                     <th class="text-center">Sr</th>
                     <th>Name</th>
                     <th>Price</th>

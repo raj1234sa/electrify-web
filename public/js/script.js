@@ -1,11 +1,12 @@
 var orderFalseIndex = [];
 var columnDefs = [];
 
-function drawTable(action=[]) {
+function drawTable(action=[], from='') {
         $("#filterForm select, #filterForm input, #filterForm button[type!=button]").each(function() {
                 $.cookie("search_" + $(this).attr("id"), $(this).val());
         });
         var data = "";
+        var defaultSorting = [[ 0, "asc" ]];
         if (action.length > 0) {
                 action.forEach(function(item, index) {
                 if (index > 0) {
@@ -14,9 +15,13 @@ function drawTable(action=[]) {
                 data += item[0] + "=" + item[1];
                 });
         }
+        if(from == "print") {
+
+        }
         $("#dataTable.ajax").DataTable().destroy();
         if($("table").data('checkbox') == true) {
                 orderFalseIndex.push(0);
+                defaultSorting = [[ 1, "asc" ]];
                 columnDefs.push({
                         "width": '1px',
                         "targets": 0
@@ -32,6 +37,7 @@ function drawTable(action=[]) {
                 "targets": orderFalseIndex
         });
         var table = $('#dataTable.ajax').DataTable({
+                "order": defaultSorting,
                 "dom": 'tirlp<"clear">',
                 "columnDefs": [
                         {
@@ -39,6 +45,7 @@ function drawTable(action=[]) {
                                 "targets": orderFalseIndex
                         }
                 ],
+                "pageLength": 
                 "processing": true,
                 "serverSide": true,
                 "searching": false,
@@ -49,7 +56,7 @@ function drawTable(action=[]) {
                                 }
                         });
                 },
-                "stateSave": true,
+                "stateSave": false,
                 "ajax": {
                         "url": $('table').data('load'),
                         "type": "POST",

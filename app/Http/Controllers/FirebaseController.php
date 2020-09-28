@@ -7,7 +7,7 @@ use Kreait\Firebase\Factory;
 
 class FirebaseController extends Controller
 {
-    static $database;
+    static $collectionRef;
     static $firestore;
     static $collection;
     static $document;
@@ -15,7 +15,7 @@ class FirebaseController extends Controller
     static function setCollection($collectioName) {
         $factory = (new Factory())->withServiceAccount(base_path().DIRECTORY_SEPARATOR.env('FIREBASE_CREDENTIALS'));
         self::$firestore = $factory->createFirestore();
-        self::$database = self::$firestore->database()->collection($collectioName);
+        self::$collectionRef = self::$firestore->database()->collection($collectioName);
         self::$collection = $collectioName;
     }
 
@@ -25,16 +25,16 @@ class FirebaseController extends Controller
     }
 
     static function setDocument($documentId) {
-        self::$database = self::$database->document($documentId);
+        self::$collectionRef = self::$collectionRef->document($documentId);
         self::$document = $documentId;
     }
 
     static function getData() {
         if(self::$document == null) {
-            $documents = self::$database->documents();
+            $documents = self::$collectionRef->documents();
             return $documents;
         } else {
-            $data = self::$database->snapshot()->data();
+            $data = self::$collectionRef->snapshot()->data();
             return $data;
         }
     }
@@ -43,8 +43,8 @@ class FirebaseController extends Controller
         self::$firestore->database()->collection(self::$collection)->document(self::$document)->set($data_array);
     }
 
-    static function orderBy($columnName, $direction) {
-        self::$database = self::$database->orderBy($columnName, $direction);
+    static function orderByColumn($columnName, $direction) {
+        self::$collectionRef = (self::$collectionRef)->orderBy($columnName, $direction);
     }
 
     static function deleteDocument() {

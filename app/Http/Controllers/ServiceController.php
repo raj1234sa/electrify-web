@@ -72,7 +72,7 @@ class ServiceController extends Controller
             $search = $searchArr['keyword'];
         }
         FirebaseController::setCollection('services');
-        FirebaseController::orderBy($fieldArr[$order], strtoupper($dir));
+        FirebaseController::orderByColumn($fieldArr[$order], strtoupper($dir));
         $documents = FirebaseController::getData();
         $htmlArray = array();
         $counter = 0;
