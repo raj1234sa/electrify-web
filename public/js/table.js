@@ -1,4 +1,20 @@
 $(document).ready(()=> {
+        $(document).keyup(function(e) {
+                if(e.which == 27 && window.printMode == true) {
+                        drawTable([]);
+                        $("#navbar").show();
+                        $("#breadcrumbs").show();
+                        $("#sidebar").show();
+                        $(".main-content").css('margin-left', "190px"); // 190
+                        $(".page-header").show();
+                        $("#filterForm").show();
+                        $(".table-tools").show();
+                        $(".dataTable_processing").show();
+                        $(".dataTables_length").show();
+                        $(".dataTables_paginate").show();
+                        $(".dataTables_info").show();
+                }
+        });
         var html = '<div class="table-tools">';
         tabletools.forEach(element => {
                 if(element == 'print') {
@@ -13,7 +29,7 @@ $(document).ready(()=> {
                 }
         });
         html += '</div>';
-        $("table").before(html);
+        $("#filterForm").after(html);
         $(".export-btn").click(function() {
                 var url = $(this).data('export');
                 $.ajax({
@@ -22,6 +38,7 @@ $(document).ready(()=> {
                 });
         });
         $(".print-btn").click(function() {
+                window.printMode = true;
                 drawTable([], 'print');
                 $("#navbar").hide();
                 $("#breadcrumbs").hide();
@@ -34,15 +51,5 @@ $(document).ready(()=> {
                 $(".dataTables_length").hide();
                 $(".dataTables_paginate").hide();
                 $(".dataTables_info").hide();
-                $("thead tr th").each(function() {
-                        if($(this).children('input[type=checkbox]').hasClass('table_checkbox') || $(this).html().includes('Action')) {
-                                $(this).hide();
-                        }
-                });
-                $("tbody tr td").each(function() {
-                        if($(this).children('input[type=checkbox]').hasClass('table_checkbox') || $(this).html().includes('Action')) {
-                                $(this).hide();
-                        }
-                });
         });
 });

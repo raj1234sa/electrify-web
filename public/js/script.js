@@ -7,6 +7,7 @@ function drawTable(action=[], from='') {
         });
         var data = "";
         var defaultSorting = [[ 0, "asc" ]];
+        var columnDefs = [];
         if (action.length > 0) {
                 action.forEach(function(item, index) {
                 if (index > 0) {
@@ -15,8 +16,19 @@ function drawTable(action=[], from='') {
                 data += item[0] + "=" + item[1];
                 });
         }
+        var pageLength = $("#dataTable_length").children('select').val();
         if(from == "print") {
-
+                pageLength = 100;
+                var printHides = [];
+                $("thead tr th").each(function(index) {
+                        if($(this).data('printhide') == true) {
+                                printHides.push(index);
+                        }
+                });
+                columnDefs.push({
+                        "targets": printHides,
+                        "visible": false
+                    });
         }
         $("#dataTable.ajax").DataTable().destroy();
         if($("table").data('checkbox') == true) {
@@ -39,13 +51,8 @@ function drawTable(action=[], from='') {
         var table = $('#dataTable.ajax').DataTable({
                 "order": defaultSorting,
                 "dom": 'tirlp<"clear">',
-                "columnDefs": [
-                        {
-                                "orderable": false,
-                                "targets": orderFalseIndex
-                        }
-                ],
-                "pageLength": 
+                "columnDefs": columnDefs,
+                "pageLength": pageLength,
                 "processing": true,
                 "serverSide": true,
                 "searching": false,
