@@ -27,3 +27,4 @@ Route::post('/save-service', 'App\Http\Controllers\ServiceController@insert');
 Route::get('/add-service/{id}', 'App\Http\Controllers\ServiceController@edit');
 Route::post('/service-status-change', 'App\Http\Controllers\ServiceController@changeStatus');
 Route::get('/delete-service/{id}', 'App\Http\Controllers\ServiceController@delete');
+Route::get('/services-export', 'App\Http\Controllers\ServiceController@export');

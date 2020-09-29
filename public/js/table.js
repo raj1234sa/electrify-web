@@ -32,9 +32,27 @@ $(document).ready(()=> {
         $("#filterForm").after(html);
         $(".export-btn").click(function() {
                 var url = $(this).data('export');
+                var action = [];
+                var empty = true;
+                $("#filterForm button[type!=button], #filterForm select, #filterForm input").each(function() {
+                    if ($(this).val() == null || $(this).val() == "") {} else {
+                        empty = false;
+                        action.push([$(this).attr('id'), $(this).val()]);
+                    }
+                });
+                var data = "";
+                if (action.length > 0) {
+                        action.forEach(function(item, index) {
+                        if (index > 0) {
+                                data += "&";
+                        }
+                        data += item[0] + "=" + item[1];
+                        });
+                }
                 $.ajax({
                         url: url,
                         type: "GET",
+                        data: data,
                 });
         });
         $(".print-btn").click(function() {

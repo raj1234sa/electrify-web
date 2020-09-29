@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Kreait\Firebase\Factory;
+use PHPExcel;
+use PHPExcel_IOFactory;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 use function App\Http\draw_action_menu;
 use function App\Http\draw_table_checkbox;
@@ -71,9 +76,10 @@ class ServiceController extends Controller
         if(!empty($searchArr)) {
             $search = $searchArr['keyword'];
         }
-        FirebaseController::setCollection('services');
-        FirebaseController::orderByColumn($fieldArr[$order], strtoupper($dir));
-        $documents = FirebaseController::getData();
+        $firebaseController = new FirebaseController();
+        $firebaseController->setCollection('services');
+        $firebaseController->orderByColumn($fieldArr[$order], strtoupper($dir));
+        $documents = $firebaseController->getData();
         $htmlArray = array();
         $counter = 0;
         $lengthCounter = 0;
@@ -143,14 +149,15 @@ class ServiceController extends Controller
         $service_status = $req->input('service_status');
         $save_back = $req->input('save_back');
         $save = $req->input('save');
-        FirebaseController::setCollectionAndDocument('services', $service_id);
+        $firebaseController = new FirebaseController();
+        $firebaseController->setCollectionAndDocument('services', $service_id);
         $data = array(
             'id' => $service_id,
             'name' => $service_name,
             'price' => (double) $service_price,
             'status' => (isset($service_status)) ? true : false,
         );
-        FirebaseController::setDataToCollection($data);
+        $firebaseController->setDataToCollection($data);
         $message = "Data is added successfully.";
         if($mode == 'edit') {
             $message = "Data is updated successfully.";
@@ -163,8 +170,9 @@ class ServiceController extends Controller
     }
 
     public function edit($id) {
-        FirebaseController::setCollectionAndDocument('services', $id);
-        $database = FirebaseController::getData();
+        $firebaseController = new FirebaseController();
+        $firebaseController->setCollectionAndDocument('services', $id);
+        $database = $firebaseController->getData();
         $breadcrumbs = array(
             array(
                 'title'=>'Services',
@@ -189,18 +197,45 @@ class ServiceController extends Controller
     {
         $id = $req->input('id');
         $status = $req->input('status');
-        FirebaseController::setCollectionAndDocument('services', $id);
-        $serviceData = FirebaseController::getData();
+        $firebaseController = new FirebaseController();
+        $firebaseController->setCollectionAndDocument('services', $id);
+        $serviceData = $firebaseController->getData();
         $serviceData['status'] = empty($status) ? false : true;
-        FirebaseController::setDataToCollection($serviceData);
+        $firebaseController->setDataToCollection($serviceData);
         $response = new Response('success');
         return $response;
     }
 
     public function delete($id) {
-        FirebaseController::setCollectionAndDocument('services', $id);
-        FirebaseController::deleteDocument();
+        $firebaseController = new FirebaseController();
+        $firebaseController->setCollectionAndDocument('services', $id);
+        $firebaseController->deleteDocument();
         $reponse = new Response('success');
         return $reponse;
+    }
+
+    public function export(Request $req)
+    {
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setCellValue('A1', 'Hello World !');
+        header('Content-type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="file.xls"');
+        $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer->save('php://output');
+        // $objPHPExcel = new PHPExcel();
+        // // $writer = new Xlsx($spreadsheet);
+        // // $writer->save('hello world.xlsx');
+        // $objPHPExcel->getActiveSheet()->setTitle('Participants');
+        // $objPHPExcel->setActiveSheetIndex(0);
+        // $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        // $objWriter->save(str_replace('.html', '.xls', __FILE__));
+
+        // // We'll be outputting an excel file
+
+        // // It will be called file.xls
+
+        // // Write file to the browser
+        // $objWriter->save('php://output');
     }
 }

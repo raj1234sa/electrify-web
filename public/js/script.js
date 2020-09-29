@@ -28,7 +28,7 @@ function drawTable(action=[], from='') {
                 columnDefs.push({
                         "targets": printHides,
                         "visible": false
-                    });
+                });
         }
         $("#dataTable.ajax").DataTable().destroy();
         if($("table").data('checkbox') == true) {

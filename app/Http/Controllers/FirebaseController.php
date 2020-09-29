@@ -7,47 +7,44 @@ use Kreait\Firebase\Factory;
 
 class FirebaseController extends Controller
 {
-    static $collectionRef;
-    static $firestore;
-    static $collection;
-    static $document;
+    private $collectionRef, $firestore, $collection, $document;
 
-    static function setCollection($collectioName) {
+    function setCollection($collectioName) {
         $factory = (new Factory())->withServiceAccount(base_path().DIRECTORY_SEPARATOR.env('FIREBASE_CREDENTIALS'));
-        self::$firestore = $factory->createFirestore();
-        self::$collectionRef = self::$firestore->database()->collection($collectioName);
-        self::$collection = $collectioName;
+        $this->firestore = $factory->createFirestore();
+        $this->collectionRef = $this->firestore->database()->collection($collectioName);
+        $this->collection = $collectioName;
     }
 
-    static function setCollectionAndDocument($collectioName, $documentId) {
-        self::setCollection($collectioName);
-        self::setDocument($documentId);
+    function setCollectionAndDocument($collectioName, $documentId) {
+        $this->setCollection($collectioName);
+        $this->setDocument($documentId);
     }
 
-    static function setDocument($documentId) {
-        self::$collectionRef = self::$collectionRef->document($documentId);
-        self::$document = $documentId;
+    function setDocument($documentId) {
+        $this->collectionRef = $this->collectionRef->document($documentId);
+        $this->document = $documentId;
     }
 
-    static function getData() {
-        if(self::$document == null) {
-            $documents = self::$collectionRef->documents();
+    function getData() {
+        if($this->document == null) {
+            $documents = $this->collectionRef->documents();
             return $documents;
         } else {
-            $data = self::$collectionRef->snapshot()->data();
+            $data = $this->collectionRef->snapshot()->data();
             return $data;
         }
     }
 
-    static function setDataToCollection($data_array) {
-        self::$firestore->database()->collection(self::$collection)->document(self::$document)->set($data_array);
+    function setDataToCollection($data_array) {
+        $this->firestore->database()->collection($this->collection)->document($this->document)->set($data_array);
     }
 
-    static function orderByColumn($columnName, $direction) {
-        self::$collectionRef = (self::$collectionRef)->orderBy($columnName, $direction);
+    function orderByColumn($columnName, $direction) {
+        $this->collectionRef = ($this->collectionRef)->orderBy($columnName, $direction);
     }
 
-    static function deleteDocument() {
-        self::$firestore->database()->collection(self::$collection)->document(self::$document)->delete();
+    function deleteDocument() {
+        $this->firestore->database()->collection($this->collection)->document($this->document)->delete();
     }
 }
