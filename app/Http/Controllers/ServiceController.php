@@ -13,6 +13,8 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 use function App\Http\draw_action_menu;
 use function App\Http\draw_table_checkbox;
+use function App\Http\export_file_generate;
+use function App\Http\export_report;
 use function App\Http\extract_search_field;
 
 class ServiceController extends Controller
@@ -31,7 +33,7 @@ class ServiceController extends Controller
             ),
         );
         $data = array(
-            'page_name' => substr(url()->current(), strrpos(url()->current(), '/')+1),
+            'page_name' => substr(url()->current(), strrpos(url()->current(), '/')),
             'breadcrumbs'=> $breadcrumbs,
             'service_id'=>time(),
         );
@@ -53,7 +55,7 @@ class ServiceController extends Controller
             'icon'=>'fa fa-plus',
         );
         $data = array(
-            'page_name' => substr(url()->current(), strrpos(url()->current(), '/')+1),
+            'page_name' => substr(url()->current(), strrpos(url()->current(), '/')),
             'breadcrumbs' => $breadcrumbs,
             'actions'=>$action_buttons,
         );
@@ -95,7 +97,7 @@ class ServiceController extends Controller
             if ($document->exists() && $key+1 > $start) {
                 $service = $document->data();
                 if(isset($search) && !empty($search)) {
-                    if(strpos($service['name'], $search) === FALSE) {
+                    if(strpos(strtolower($service['name']), strtolower($search)) === FALSE) {
                         continue;
                     }
                 }
@@ -146,6 +148,9 @@ class ServiceController extends Controller
         $mode = $req->input('mode');
         $service_name = $req->input('service_name');
         $service_price = $req->input('service_price');
+        if(empty($service_price)) {
+            $service_price = 0;
+        }
         $service_status = $req->input('service_status');
         $save_back = $req->input('save_back');
         $save = $req->input('save');
@@ -185,7 +190,7 @@ class ServiceController extends Controller
             ),
         );
         $data = array(
-            'page_name'=>'service-list',
+            'page_name'=>'/service-list',
             'postdata' => $database,
             'service_id' => $database['id'],
             'breadcrumbs' => $breadcrumbs,
@@ -216,26 +221,28 @@ class ServiceController extends Controller
 
     public function export(Request $req)
     {
-        $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
-        $sheet->setCellValue('A1', 'Hello World !');
-        header('Content-type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="file.xls"');
-        $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
-        $writer->save('php://output');
-        // $objPHPExcel = new PHPExcel();
-        // // $writer = new Xlsx($spreadsheet);
-        // // $writer->save('hello world.xlsx');
-        // $objPHPExcel->getActiveSheet()->setTitle('Participants');
-        // $objPHPExcel->setActiveSheetIndex(0);
-        // $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-        // $objWriter->save(str_replace('.html', '.xls', __FILE__));
-
-        // // We'll be outputting an excel file
-
-        // // It will be called file.xls
-
-        // // Write file to the browser
-        // $objWriter->save('php://output');
+        $search = extract_search_field($req);
+        $firebaseController = new FirebaseController();
+        $firebaseController->setCollection('services');
+        $serviceDocs = $firebaseController->getData();
+        $serviceData = array();
+        foreach ($serviceDocs as $key => $value) {
+            if(!empty($search)) {
+                if (strpos($value['name'], $search['keyword']) === FALSE)
+                    continue;
+            }
+            $rec = array();
+            $rec['service_name'] = $value['name'];
+            $rec['service_price'] = $value['price'];
+            $serviceData[] = $rec;
+        }
+        $fields = array();
+        $fields[] = array("service_name" => array("title" => "Service Name", "name" => "service_name"));
+        $fields[] = array("service_price" => array("title" => "Service Amount", "name" => "service_price", 'total' => true));
+        $spreadsheet = export_file_generate($fields, $serviceData, array(
+            'sheetTitle' => 'Service Report',
+            'headerDate' => 'All',
+        ));
+        return export_report($spreadsheet, 'all_services.xlsx');
     }
 }

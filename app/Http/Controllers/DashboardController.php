@@ -23,7 +23,7 @@ class DashboardController extends Controller
             ),
         );
         $data = array(
-            'page_name' => substr(url()->current(), strrpos(url()->current(), '/') + 1),
+            'page_name' => substr(url()->current(), strrpos(url()->current(), '/')),
             'breadcrumbs' => $breadcrumbs,
         );
         return view('dashboard', $data);

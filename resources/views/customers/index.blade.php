@@ -1,9 +1,6 @@
 @extends('layout.main')
-@section('page-title', 'Services')
-@section('page-header', 'Services')
-@section('action-button')
-    {!! app\Http\draw_action_buttons($actions) !!}
-@endsection
+@section('page-title', 'Customers')
+@section('page-header', 'Customers')
 @section('main-body')
     <div class="table-responsive">
         <form id="filterForm">
@@ -22,16 +19,20 @@
                 </div>
             </div>
         </form>
-        <table id="dataTable" class="ajax table table-striped table-hover" data-checkbox="true" data-load='get-services-list-ajax'>
+        <table id="dataTable" class="ajax table table-striped table-hover" data-checkbox="true"
+               data-load='get-customers-list-ajax'>
             <thead>
-                <tr>
-                    <th class="text-center" width='1px' data-printhide="true"><input name='form-field-checkbox' type='checkbox' id ='table_select_all' class='ace table_checkbox'><span class='lbl'></span></th>
-                    <th class="text-center">Sr</th>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th class="text-center">Status</th>
-                    <th data-order="false" data-printhide="true">Action</th>
-                </tr>
+            <tr>
+                <th class="text-center" width='1px' data-printhide="true">
+                    <input name='form-field-checkbox' type='checkbox' id='table_select_all' class='ace table_checkbox'>
+                    <span class='lbl'></span>
+                </th>
+                <th data-order="false" class="text-center">Sr</th>
+                <th>UserId</th>
+                <th>Name</th>
+                <th>Phone Number</th>
+                <th data-order="false" data-printhide="true">Action</th>
+            </tr>
             </thead>
         </table>
     </div>
@@ -40,6 +41,6 @@
 @section('js')
     <script>
         var tabletools = ['export', 'print'];
-        var exportRoute = 'services-export';
+        var exportRoute = 'customers-export';
     </script>
 @endsection

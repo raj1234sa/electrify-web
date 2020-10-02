@@ -2175,7 +2175,7 @@ social:
     - user-circle
     - user-friends
     - user-plus
-    - users
+    - customers
     - video
   label: Social
 spinners:
@@ -2460,9 +2460,9 @@ users-people:
     - user-tag
     - user-tie
     - user-times
-    - users
-    - users-cog
-    - users-slash
+    - customers
+    - customers-cog
+    - customers-slash
     - walking
     - wheelchair
   label: Users & People

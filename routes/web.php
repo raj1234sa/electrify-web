@@ -20,11 +20,19 @@ Route::get('/logout', 'App\Http\Controllers\DashboardController@logout');
 Route::get('/dashboard', 'App\Http\Controllers\DashboardController@dashboard');
 
 Route::post('/get-services-list-ajax', 'App\Http\Controllers\ServiceController@ajaxlist');
-
 Route::get('/service-list', 'App\Http\Controllers\ServiceController@index');
 Route::get('/add-service', 'App\Http\Controllers\ServiceController@create');
 Route::post('/save-service', 'App\Http\Controllers\ServiceController@insert');
 Route::get('/add-service/{id}', 'App\Http\Controllers\ServiceController@edit');
 Route::post('/service-status-change', 'App\Http\Controllers\ServiceController@changeStatus');
 Route::get('/delete-service/{id}', 'App\Http\Controllers\ServiceController@delete');
-Route::get('/services-export', 'App\Http\Controllers\ServiceController@export');
+Route::post('/services-export', 'App\Http\Controllers\ServiceController@export');
+
+Route::post('/get-customers-list-ajax', 'App\Http\Controllers\CustomersController@ajaxlist');
+Route::get('/customer-list', 'App\Http\Controllers\CustomersController@index');
+Route::get('/add-customer', 'App\Http\Controllers\CustomersController@create');
+Route::post('/save-customer', 'App\Http\Controllers\CustomersController@insert');
+Route::get('/add-customer/{id}', 'App\Http\Controllers\CustomersController@edit');
+Route::post('/customer-status-change', 'App\Http\Controllers\CustomersController@changeStatus');
+Route::get('/delete-customer/{id}', 'App\Http\Controllers\CustomersController@delete');
+Route::post('/customers-export', 'App\Http\Controllers\CustomersController@export');
