@@ -43,6 +43,7 @@
     <link rel="stylesheet" href="{{DIR_HTTP_CSS}}bootstrap-datetimepicker.min.css"/>
     <link rel="stylesheet" href="{{DIR_HTTP_CSS}}bootstrap-colorpicker.min.css"/>
     <link rel="stylesheet" href="{{DIR_HTTP_CSS}}custom.css"/>
+    <link rel="stylesheet" href="{{DIR_HTTP_CSS}}responsive.css"/>
 </head>
 
 <body class="no-skin">
@@ -61,7 +62,7 @@
         <strong>Error!</strong> {{Session::get('fail')}}
     </div>
 @endif
-<div id="navbar" class="navbar navbar-default ace-save-state">
+<div id="navbar" class="navbar navbar-default ace-save-state navbar-fixed-top">
     <div class="navbar-container ace-save-state" id="navbar-container">
         <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
             <span class="sr-only">Toggle sidebar</span>
@@ -129,7 +130,7 @@
         }
     </script>
 
-    <div id="sidebar" class="sidebar responsive ace-save-state">
+    <div id="sidebar" class="sidebar responsive ace-save-state sidebar-fixed sidebar-scroll">
         <script type="text/javascript">
             try {
                 ace.settings.loadState('sidebar')
@@ -172,7 +173,7 @@
                 @if (!isset($section['children']))
                     @if($section['route'] == $page_name)
                         @php
-                            $section_selected = 'active';
+                            $section_selected = 'active highlight';
                         @endphp
                     @endif
                     <li class="{{$section_selected}}">
@@ -184,7 +185,7 @@
                 @elseif(isset($section['children']))
                     @if(in_array($page_name, array_column($section['children'], 'route')))
                         @php
-                            $section_selected = 'active open';
+                            $section_selected = 'active open highlight';
                         @endphp
                     @endif
                     <li class="{{$section_selected}}">
@@ -205,7 +206,6 @@
                                 @endif
                                 <li class="{{$menu_selected}}">
                                     <a href="{{URL::to($menu['route'])}}">
-                                        <i class="menu-icon fas fa-caret-right"></i>
                                         {{$menu['title']}}
                                     </a>
                                 </li>
@@ -224,7 +224,7 @@
 
     <div class="main-content">
         <div class="main-content-inner">
-            <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+            <div class="breadcrumbs ace-save-state breadcrumbs-fixed" id="breadcrumbs">
                 <ul class="breadcrumb">
                     @php
                         if(isset($breadcrumbs)) {

@@ -53,10 +53,9 @@ function drawTable(action = [], from = '') {
         "orderable": false,
         "targets": orderFalseIndex
     });
-    console.log(columnDefs);
     var table = $('#dataTable.ajax').DataTable({
         "order": defaultSorting,
-        "dom": 'tirlp<"clear">',
+        "dom": 't<"table-bottom"irlp><"clear">',
         "columnDefs": columnDefs,
         "pageLength": pageLength,
         "processing": true,
@@ -68,6 +67,34 @@ function drawTable(action = [], from = '') {
                     $(row).children(":nth-child(" + (i + 1) + ")").addClass('text-center');
                 }
             });
+        },
+        "fnDrawCallback": function() {
+            if($("tbody").text() != "No data available in table") {
+                var html = '';
+                if($(".table-tools").html() == undefined) {
+                    html += '<div class="table-tools">';
+                }
+                tabletools.forEach(element => {
+                    if (element == 'print') {
+                        var printHtml = '';
+                        printHtml = '<button type="button" class="btn btn-white print-btn"><i class="fas fa-print"></i></button>';
+                        html += printHtml;
+                    }
+                    if (element == 'export') {
+                        var exportHtml = '';
+                        exportHtml = '<button type="button" data-export=' + exportRoute + ' class="btn btn-white btn-success export-btn"><i class="fa fa-file-excel"></i></button>';
+                        html += exportHtml;
+                    }
+                });
+                if($(".table-tools").html() == undefined) {
+                    html += '</div>';
+                    $(".table-responsive").before(html);
+                } else {
+                    $(".table-tools").html(html);
+                }
+            } else {
+                $(".table-tools").remove();
+            }
         },
         "stateSave": false,
         "ajax": {
@@ -249,7 +276,7 @@ $(document).ready(function () {
                         if (response == 'success') {
                             successMessage('Data is deleted successfully.');
                         } else {
-                            failMessage('Error deleting data.');
+                            failMessage(response);
                         }
                     },
                     complete: function () {

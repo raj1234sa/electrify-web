@@ -22,24 +22,10 @@ $(document).ready(() => {
             $(".dataTables_length").show();
             $(".dataTables_paginate").show();
             $(".dataTables_info").show();
+            window.printMode = false;
         }
     });
-    var html = '<div class="table-tools">';
-    tabletools.forEach(element => {
-        if (element == 'print') {
-            var printHtml = '';
-            printHtml = '<button type="button" class="btn btn-white print-btn"><i class="fas fa-print"></i></button>';
-            html += printHtml;
-        }
-        if (element == 'export') {
-            var exportHtml = '';
-            exportHtml = '<button type="button" data-export=' + exportRoute + ' class="btn btn-white btn-success export-btn"><i class="fa fa-file-excel"></i></button>';
-            html += exportHtml;
-        }
-    });
-    html += '</div>';
-    $("#filterForm").after(html);
-    $(".export-btn").click(function () {
+    $(document).delegate('.export-btn', 'click', function () {
         var url = $(this).data('export');
         var action = [];
         var empty = true;
@@ -62,18 +48,18 @@ $(document).ready(() => {
         $.ajax({
             url: url,
             type: "POST",
-            data: { data: data, _token:$("#csrf").val() },
-            success: function(data) {
+            data: {data: data, _token: $("#csrf").val()},
+            success: function (data) {
                 var $a = $("<a>");
-                $a.attr("href",data.file);
+                $a.attr("href", data.file);
                 $("body").append($a);
-                $a.attr("download",data.fileName);
+                $a.attr("download", data.fileName);
                 $a[0].click();
                 $a.remove()
             }
         });
     });
-    $(".print-btn").click(function () {
+    $(document).delegate(".print-btn", 'click', function () {
         window.printMode = true;
         var action = [];
         var empty = true;

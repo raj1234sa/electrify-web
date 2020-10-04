@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
 define('DIR_HTTP_CURRENT_PAGE', "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
 define('DIR_HTTP_ROUTENAME', substr($_SERVER['REQUEST_URI'], strpos($_SERVER['REQUEST_URI'], '/') + 1));
@@ -264,7 +265,7 @@ function export_file_generate($export_data_structure, $export_data, $extra)
         $cellvalue = array();
         foreach ($export_data as $rowcount => $value) {
             $rowcount += $rowIndex;
-            foreach ($export_data_structure as $columncount => $value1) {
+            foreach ($export_data_structure as $colcount => $value1) {
                 $cellHeight = 15;
                 $value1 = array_values($value1)[0];
                 if (is_array($value[$value1['name']])) {
@@ -275,17 +276,17 @@ function export_file_generate($export_data_structure, $export_data, $extra)
                 if (isset($value1['datatype'])) {
                     switch ($value1['datatype']) {
                         case 'email':
-                            $sheet->getCell(chr(65 + $columncount) . ($rowcount + 1))->getHyperlink()->setUrl("mailto:" . $value[$value1['name']]);
-                            $sheet->getStyle(chr(65 + $columncount) . ($rowcount + 1))->applyFromArray($styleUrlArray);
+                            $sheet->getCell(chr(65 + $colcount) . ($rowcount + 1))->getHyperlink()->setUrl("mailto:" . $value[$value1['name']]);
+                            $sheet->getStyle(chr(65 + $colcount) . ($rowcount + 1))->applyFromArray($styleUrlArray);
                             break;
 
                         case 'date':
-                            $sheet->getStyle(chr(65 + $columncount) . ($rowcount + 1))->getNumberFormat()->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_DATE_DDMMYYYY);
+                            $sheet->getStyle(chr(65 + $colcount) . ($rowcount + 1))->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_DATE_DDMMYYYY);
                             $value[$value1['name']] = \PhpOffice\PhpSpreadsheet\Shared\Date::PHPToExcel($value[$value1['name']]);
                             break;
 
                         case 'currency':
-                            $sheet->getStyle(chr(65 + $columncount) . ($rowcount + 1))->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_NUMBER_00);
+                            $sheet->getStyle(chr(65 + $colcount) . ($rowcount + 1))->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_NUMBER_00);
                             break;
 
                         default:
@@ -294,15 +295,15 @@ function export_file_generate($export_data_structure, $export_data, $extra)
                 }
                 if (isset($value1['total'])) {
                     if ($value1['total'] == TRUE) {
-                        $cellvalue[chr(65 + $columncount)][] = chr(65 + $columncount) . ($rowcount + 1);
-                        $cellvalue[chr(65 + $columncount)]['lastcell'] = chr(65 + $columncount) . ($rowcount + 1 + 2);
+                        $cellvalue[chr(65 + $colcount)][] = chr(65 + $colcount) . ($rowcount + 1);
+                        $cellvalue[chr(65 + $colcount)]['lastcell'] = chr(65 + $colcount) . ($rowcount + 1 + 2);
                     }
                 }
-                $sheet->setCellValue(chr(65 + $columncount) . ($rowcount + 1), $value[$value1['name']]);
+                $sheet->setCellValue(chr(65 + $colcount) . ($rowcount + 1), $value[$value1['name']]);
 
-                $sheet->getStyle(chr(65 + $columncount) . ($rowcount + 1))->getAlignment()->setWrapText(true);
+                $sheet->getStyle(chr(65 + $colcount) . ($rowcount + 1))->getAlignment()->setWrapText(true);
                 $sheet->getRowDimension($rowcount + 1)->setRowHeight($cellHeight);
-                $colIndextemp = $columncount + 1;
+                $colIndextemp = $colcount + 1;
             }
             $colIndex += $colIndextemp;
             $rowIndextemp = $rowcount;

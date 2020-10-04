@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use function App\Http\draw_action_menu;
 use function App\Http\draw_table_checkbox;
@@ -149,7 +149,16 @@ class CustomersController extends Controller
         $fields[] = array('userId' => array('name' => 'userId', 'title' => "User ID"));
         $fields[] = array('username' => array('name' => 'username', 'title' => "Username"));
         $fields[] = array('phoneNumber' => array('name' => 'phoneNumber', 'title' => "Phone Number"));
-        $spreadsheet = export_file_generate($fields, $userData, array('sheetTitle' => 'Users Report','headerDate'=>'All'));
+        $spreadsheet = export_file_generate($fields, $userData, array('sheetTitle' => 'Users Report', 'headerDate' => 'All'));
         return export_report($spreadsheet, 'all_users.xlsx');
+    }
+
+    function delete($id) {
+        $firebaseController = new FirebaseController();
+        $firebaseController->setCollectionAndDocument('users',$id);
+        $firebaseController->deleteAuth($id);
+        $firebaseController->deleteDocument();
+        $response = new Response('success');
+        return $response;
     }
 }

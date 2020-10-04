@@ -60,4 +60,8 @@ class FirebaseController extends Controller
     {
         $this->firestore->database()->collection($this->collection)->document($this->document)->delete();
     }
+
+    function deleteAuth($userId) {
+        $this->auth->deleteUser($userId);
+    }
 }

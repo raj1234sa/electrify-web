@@ -215,8 +215,8 @@ class ServiceController extends Controller
         $firebaseController = new FirebaseController();
         $firebaseController->setCollectionAndDocument('services', $id);
         $firebaseController->deleteDocument();
-        $reponse = new Response('success');
-        return $reponse;
+        $response = new Response('success');
+        return $response;
     }
 
     public function export(Request $req)
@@ -238,7 +238,7 @@ class ServiceController extends Controller
         }
         $fields = array();
         $fields[] = array("service_name" => array("title" => "Service Name", "name" => "service_name"));
-        $fields[] = array("service_price" => array("title" => "Service Amount", "name" => "service_price", 'total' => true));
+        $fields[] = array("service_price" => array("title" => "Service Amount", "name" => "service_price", 'total' => true, 'datatype'=>'currency'));
         $spreadsheet = export_file_generate($fields, $serviceData, array(
             'sheetTitle' => 'Service Report',
             'headerDate' => 'All',
