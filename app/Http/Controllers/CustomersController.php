@@ -158,7 +158,6 @@ class CustomersController extends Controller
         $firebaseController->setCollectionAndDocument('users',$id);
         $firebaseController->deleteAuth($id);
         $firebaseController->deleteDocument();
-        $response = new Response('success');
-        return $response;
+        return new Response('success');
     }
 }

@@ -4,12 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Kreait\Firebase\Factory;
-use PHPExcel;
-use PHPExcel_IOFactory;
-use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 use function App\Http\draw_action_menu;
 use function App\Http\draw_table_checkbox;
@@ -140,16 +134,12 @@ class ServiceController extends Controller
     }
 
     public function insert(Request $req) {
-        $back = $req->input('back');
-        if(isset($back)) {
-            return redirect('service-list');
-        }
         $service_id = $req->input('service_id');
         $mode = $req->input('mode');
         $service_name = $req->input('service_name');
         $service_price = $req->input('service_price');
         if(empty($service_price)) {
-            $service_price = 0;
+            $service_price = 1;
         }
         $service_status = $req->input('service_status');
         $save_back = $req->input('save_back');
@@ -160,7 +150,7 @@ class ServiceController extends Controller
             'id' => $service_id,
             'name' => $service_name,
             'price' => (double) $service_price,
-            'status' => (isset($service_status)) ? true : false,
+            'status' => isset($service_status),
         );
         $firebaseController->setDataToCollection($data);
         $message = "Data is added successfully.";
@@ -172,6 +162,7 @@ class ServiceController extends Controller
         } else if(isset($save)) {
             return redirect('add-service/'.$service_id)->with('success', $message);
         }
+        return null;
     }
 
     public function edit($id) {
@@ -207,16 +198,14 @@ class ServiceController extends Controller
         $serviceData = $firebaseController->getData();
         $serviceData['status'] = empty($status) ? false : true;
         $firebaseController->setDataToCollection($serviceData);
-        $response = new Response('success');
-        return $response;
+        return new Response('success');
     }
 
     public function delete($id) {
         $firebaseController = new FirebaseController();
         $firebaseController->setCollectionAndDocument('services', $id);
         $firebaseController->deleteDocument();
-        $response = new Response('success');
-        return $response;
+        return Response('success');
     }
 
     public function export(Request $req)

@@ -140,6 +140,9 @@ $(document).ready(function () {
     var count = 0;
     $(".dataTables_processing").empty();
     $(".dataTables_processing").append('<i class="ace-icon fa fa-spinner fa-spin white bigger-250"></i>');
+    $("input.hide, input[type=hidden]").each(function() {
+        $(this).addClass('ignore');
+    });
     $("#filterForm select, #filterForm input[type!=button]").each(function () {
         var tagName = $(this).prop("tagName").toLowerCase();
         switch (tagName) {

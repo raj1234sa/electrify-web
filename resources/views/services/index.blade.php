@@ -22,7 +22,6 @@
         </div>
     </form>
     <div class="table-responsive">
-
         <table id="dataTable" class="ajax table table-striped table-hover" data-checkbox="true" data-load='get-services-list-ajax'>
             <thead>
                 <tr>

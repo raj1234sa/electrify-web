@@ -38,11 +38,9 @@ class FirebaseController extends Controller
     function getData()
     {
         if ($this->document == null) {
-            $documents = $this->collectionRef->documents();
-            return $documents;
+            return $this->collectionRef->documents();
         } else {
-            $data = $this->collectionRef->snapshot()->data();
-            return $data;
+            return $this->collectionRef->snapshot()->data();
         }
     }
 

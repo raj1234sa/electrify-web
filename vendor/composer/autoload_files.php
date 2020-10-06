@@ -96,5 +96,7 @@ return array(
     'b6ec61354e97f32c0ae683041c78392a' => $vendorDir . '/scrivo/highlight.php/HighlightUtilities/functions.php',
     'b6b991a57620e2fb6b2f66f03fe9ddc2' => $vendorDir . '/symfony/string/Resources/functions.php',
     'ed962a97bd972bc82007176b647d4e36' => $vendorDir . '/facade/ignition/src/helpers.php',
-    'dcdfa8325526cfac5184618394aa4fc4' => $baseDir . '/app/Http/helper.php',
+    '9c64124c7812651cc62a2cfcc391f643' => $baseDir . '/app/Http/functions.php',
+    'e8454c2a6a4df26a3a965c9144580517' => $baseDir . '/app/Http/html_helper.php',
+    'e59c7519335a8c5cda79ea4e41aea624' => $baseDir . '/app/Http/path.php',
 );
