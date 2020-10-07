@@ -1,13 +1,29 @@
+function startAjaxLoader() {
+    $(".ajaxloader").removeClass('hide');
+}
+
+function stopAjaxLoader() {
+    $(".ajaxloader").addClass('hide');
+}
+
 var orderFalseIndex = [];
 var columnDefs = [];
 
-function drawTable(action = [], from = '') {
-    $("#filterForm select, #filterForm input, #filterForm button[type!=button]").each(function () {
-        $.cookie("search_" + $(this).attr("id"), $(this).val());
+function getSearchAction() {
+    var action = [];
+    var empty = true;
+    $("#filterForm button[type!=button], #filterForm select, #filterForm input").each(function () {
+        if ($(this).val() == null || $(this).val() == "") {
+        } else {
+            empty = false;
+            action.push([$(this).attr('id'), $(this).val()]);
+        }
     });
+    return action;
+}
+
+function getSearchData(action = []) {
     var data = "";
-    var defaultSorting = [[0, "asc"]];
-    var columnDefs = [];
     if (action.length > 0) {
         action.forEach(function (item, index) {
             if (index > 0) {
@@ -16,9 +32,21 @@ function drawTable(action = [], from = '') {
             data += item[0] + "=" + item[1];
         });
     }
+    return data;
+}
+
+function drawTable(action = [], from = '') {
+    startAjaxLoader();
+    $("#filterForm select, #filterForm input, #filterForm button[type!=button]").each(function () {
+        $.cookie("search_" + $(this).attr("id"), $(this).val());
+    });
+    var defaultSorting = [[0, "asc"]];
+    var columnDefs = [];
+    var action = getSearchAction();
+    var data = getSearchData(action);
     var pageLength = $("#dataTable_length").children('select').val();
     if (from == "print") {
-        pageLength = 100;
+        pageLength = 500;
         var printHides = [];
         $("thead tr th").each(function (index) {
             if ($(this).data('printhide') == true) {
@@ -44,7 +72,7 @@ function drawTable(action = [], from = '') {
         }
     });
     for (let i = 0; i < 10; i++) {
-        if(!orderFalseIndex.includes(i)) {
+        if (!orderFalseIndex.includes(i)) {
             defaultSorting = [[i, "asc"]];
             break;
         }
@@ -68,10 +96,13 @@ function drawTable(action = [], from = '') {
                 }
             });
         },
-        "fnDrawCallback": function() {
-            if($("tbody").text() != "No data available in table") {
+        "fnDrawCallback": function () {
+            stopAjaxLoader();
+            $("#dataTable_previous").html('<i class="ace-icon fa fa-angle-double-left"></i>');
+            $("#dataTable_next").html('<i class="ace-icon fa fa-angle-double-right"></i>');
+            if ($("tbody").text() != "No data available in table") {
                 var html = '';
-                if($(".table-tools").html() == undefined) {
+                if ($(".table-tools").html() == undefined) {
                     html += '<div class="table-tools">';
                 }
                 tabletools.forEach(element => {
@@ -86,7 +117,7 @@ function drawTable(action = [], from = '') {
                         html += exportHtml;
                     }
                 });
-                if($(".table-tools").html() == undefined) {
+                if ($(".table-tools").html() == undefined) {
                     html += '</div>';
                     $(".table-responsive").before(html);
                 } else {
@@ -131,16 +162,15 @@ function failMessage(message) {
     }, 6000);
 }
 
-var action = [];
 $(document).ready(function () {
-    $("button").click(function() {
+    $("button").click(function () {
         $(this).css("outline", 'none !important');
         $(this).css("decoration", 'none !important');
     });
     var count = 0;
     $(".dataTables_processing").empty();
     $(".dataTables_processing").append('<i class="ace-icon fa fa-spinner fa-spin white bigger-250"></i>');
-    $("input.hide, input[type=hidden]").each(function() {
+    $("input.hide, input[type=hidden]").each(function () {
         $(this).addClass('ignore');
     });
     $("#filterForm select, #filterForm input[type!=button]").each(function () {
@@ -160,31 +190,16 @@ $(document).ready(function () {
                 break;
         }
     });
-    action = [];
-    var empty = true;
-    $("#filterForm button[type!=button], #filterForm select, #filterForm input").each(function () {
-        if ($(this).val() == null || $(this).val() == "") {
-        } else {
-            empty = false;
-            action.push([$(this).attr('id'), $(this).val()]);
-        }
-    });
-    drawTable(action);
+
+    if ($('table.ajax.table').length > 0) {
+        drawTable(getSearchAction());
+    }
     $("#filterForm").submit(function (e) {
         e.preventDefault();
         $("#filterForm button[type=button]#search").click();
     });
     $("#filterForm button#search").click(function () {
-        action = [];
-        var empty = true;
-        $("#filterForm button[type!=button], #filterForm select, #filterForm input").each(function () {
-            if ($(this).val() == null || $(this).val() == "") {
-            } else {
-                empty = false;
-                action.push([$(this).attr('id'), $(this).val()]);
-            }
-        });
-        drawTable(action);
+        drawTable(getSearchAction());
     });
     $("#filterForm button[type=button]#reset").click(function () {
         $("#filterForm button[type!=button], #filterForm select, #filterForm input").val("");
@@ -252,6 +267,7 @@ $(document).ready(function () {
             data: {id: id, status: status, _token: $("#csrf").val()},
             beforeSend: function () {
                 $(".alert.alert-dismissible").remove();
+                startAjaxLoader();
             },
             success: function (response) {
                 if (response == 'success') {
@@ -261,7 +277,8 @@ $(document).ready(function () {
                 }
             },
             complete: function () {
-                drawTable(action);
+                drawTable(getSearchAction());
+                stopAjaxLoader();
             }
         });
     });
@@ -275,6 +292,9 @@ $(document).ready(function () {
                 $.ajax({
                     url: url,
                     type: "GET",
+                    beforeSend: function () {
+                        startAjaxLoader();
+                    },
                     success: function (response) {
                         if (response == 'success') {
                             successMessage('Data is deleted successfully.');
@@ -283,7 +303,8 @@ $(document).ready(function () {
                         }
                     },
                     complete: function () {
-                        drawTable();
+                        drawTable(getSearchAction());
+                        stopAjaxLoader();
                     }
                 });
             }

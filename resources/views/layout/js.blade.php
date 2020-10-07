@@ -8,11 +8,15 @@
 <script src="{{DIR_HTTP_JS}}bootstrap-multiselect.min.js"></script>
 <script src="{{DIR_HTTP_JS}}select2.min.js"></script>
 <script src="{{DIR_HTTP_JS}}jquery-typeahead.js"></script>
+<script src="{{DIR_HTTP_JS}}jquery-ui.custom.min.js"></script>
+<script src="{{DIR_HTTP_JS}}jquery.ui.touch-punch.min.js"></script>
+<script src="{{DIR_HTTP_JS}}bootbox.js"></script>
+<script src="{{DIR_HTTP_JS}}jquery.easypiechart.min.js"></script>
+<script src="{{DIR_HTTP_JS}}jquery.gritter.min.js"></script>
+<script src="{{DIR_HTTP_JS}}spin.js"></script>
 <script src="{{DIR_HTTP_JS}}ace-elements.min.js"></script>
 <script src="{{DIR_HTTP_JS}}ace.min.js"></script>
 <script src="{{DIR_HTTP_JS}}dataTable.min.js"></script>
-<script src="{{DIR_HTTP_JS}}jquery-ui.custom.min.js"></script>
-<script src="{{DIR_HTTP_JS}}jquery.ui.touch-punch.min.js"></script>
 <script src="{{DIR_HTTP_JS}}chosen.jquery.min.js"></script>
 <script src="{{DIR_HTTP_JS}}spinbox.min.js"></script>
 <script src="{{DIR_HTTP_JS}}bootstrap-datepicker.min.js"></script>
@@ -26,10 +30,6 @@
 <script src="{{DIR_HTTP_JS}}jquery.inputlimiter.min.js"></script>
 <script src="{{DIR_HTTP_JS}}jquery.maskedinput.min.js"></script>
 <script src="{{DIR_HTTP_JS}}bootstrap-tag.min.js"></script>
-<script src="{{DIR_HTTP_JS}}bootbox.js"></script>
-<script src="{{DIR_HTTP_JS}}jquery.easypiechart.min.js"></script>
-<script src="{{DIR_HTTP_JS}}jquery.gritter.min.js"></script>
-<script src="{{DIR_HTTP_JS}}spin.js"></script>
 <script src="{{DIR_HTTP_JS}}jquery.cookie.min.js"></script>
 <script src="{{DIR_HTTP_JS}}script.js"></script>
 @yield("js")

@@ -6,4 +6,5 @@
             }
         @endphp
     </ul><!-- /.breadcrumb -->
+    <i class="ace-icon fa fa-spinner fa-spin bigger-150 ajaxloader hide"></i>
 </div>

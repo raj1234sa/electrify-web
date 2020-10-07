@@ -1,16 +1,7 @@
 $(document).ready(() => {
     $(document).keyup(function (e) {
         if (e.which == 27 && window.printMode == true) {
-            var action = [];
-            var empty = true;
-            $("#filterForm button[type!=button], #filterForm select, #filterForm input").each(function () {
-                if ($(this).val() == null || $(this).val() == "") {
-                } else {
-                    empty = false;
-                    action.push([$(this).attr('id'), $(this).val()]);
-                }
-            });
-            drawTable(action);
+            drawTable(getSearchAction());
             $("#navbar").show();
             $("#breadcrumbs").show();
             $("#sidebar").show();
@@ -27,28 +18,15 @@ $(document).ready(() => {
     });
     $(document).delegate('.export-btn', 'click', function () {
         var url = $(this).data('export');
-        var action = [];
-        var empty = true;
-        $("#filterForm button[type!=button], #filterForm select, #filterForm input").each(function () {
-            if ($(this).val() == null || $(this).val() == "") {
-            } else {
-                empty = false;
-                action.push([$(this).attr('id'), $(this).val()]);
-            }
-        });
-        var data = "";
-        if (action.length > 0) {
-            action.forEach(function (item, index) {
-                if (index > 0) {
-                    data += "&";
-                }
-                data += item[0] + "=" + item[1];
-            });
-        }
+        var action = getSearchAction();
+        var data = getSearchData(action);
         $.ajax({
             url: url,
             type: "POST",
             data: {data: data, _token: $("#csrf").val()},
+            beforeSend: function () {
+                startAjaxLoader();
+            },
             success: function (data) {
                 var $a = $("<a>");
                 $a.attr("href", data.file);
@@ -56,21 +34,15 @@ $(document).ready(() => {
                 $a.attr("download", data.fileName);
                 $a[0].click();
                 $a.remove()
+            },
+            complete: function () {
+                stopAjaxLoader();
             }
         });
     });
     $(document).delegate(".print-btn", 'click', function () {
         window.printMode = true;
-        var action = [];
-        var empty = true;
-        $("#filterForm button[type!=button], #filterForm select, #filterForm input").each(function () {
-            if ($(this).val() == null || $(this).val() == "") {
-            } else {
-                empty = false;
-                action.push([$(this).attr('id'), $(this).val()]);
-            }
-        });
-        drawTable(action, 'print');
+        drawTable(getSearchAction(), 'print');
         $("#navbar").hide();
         $("#breadcrumbs").hide();
         $("#sidebar").hide();
