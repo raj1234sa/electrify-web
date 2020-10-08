@@ -22,7 +22,7 @@
         </div>
     </form>
     <div class="table-responsive">
-        <table id="dataTable" class="ajax table table-striped table-hover" data-checkbox="true" data-load='get-services-list-ajax'>
+        <table id="dataTable" class="ajax table dataTable table-striped table-hover" data-checkbox="true" data-load='get-services-list-ajax'>
             <thead>
                 <tr>
                     <th class="text-center" width='1px' data-printhide="true"><input name='form-field-checkbox' type='checkbox' id ='table_select_all' class='ace table_checkbox'><span class='lbl'></span></th>

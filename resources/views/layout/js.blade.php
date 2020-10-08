@@ -14,6 +14,7 @@
 <script src="{{DIR_HTTP_JS}}jquery.easypiechart.min.js"></script>
 <script src="{{DIR_HTTP_JS}}jquery.gritter.min.js"></script>
 <script src="{{DIR_HTTP_JS}}spin.js"></script>
+<script src="{{DIR_HTTP_JS}}wizard.min.js"></script>
 <script src="{{DIR_HTTP_JS}}ace-elements.min.js"></script>
 <script src="{{DIR_HTTP_JS}}ace.min.js"></script>
 <script src="{{DIR_HTTP_JS}}dataTable.min.js"></script>

@@ -16,26 +16,11 @@ if ($_SERVER['HTTP_HOST'] == "localhost:8000" || $_SERVER['HTTP_HOST'] == "127.0
     define('DIR_HTTP_IMAGES', DIR_HTTP_HOME . "images/");
     define('DIR_WS_IMAGES', DIR_WS_HOME . "images\\");
 
-    define('DIR_HTTP_CATEGORY_IMAGES', DIR_HTTP_IMAGES . "category/");
-    define('DIR_WS_CATEGORY_IMAGES', DIR_WS_IMAGES . "category\\");
-
-    define('DIR_HTTP_PRODUCT_IMAGES', DIR_HTTP_IMAGES . "product/");
-    define('DIR_WS_PRODUCT_IMAGES', DIR_WS_IMAGES . "product\\");
-
-    define('DIR_HTTP_SLIDER_IMAGES', DIR_HTTP_IMAGES . "slider/");
-    define('DIR_WS_SLIDER_IMAGES', DIR_WS_IMAGES . "slider\\");
-
     define('DIR_HTTP_CSV', DIR_HTTP_IMAGES . "sample/");
     define('DIR_WS_CSV', DIR_WS_IMAGES . "sample\\");
 
     define('DIR_HTTP_UPLOAD', DIR_HTTP_IMAGES . "csv/");
     define('DIR_WS_UPLOAD', DIR_WS_IMAGES . "csv\\");
-
-    define('DIR_HTTP_TEMPIMAGES', DIR_HTTP_IMAGES . "tempimages/");
-    define('DIR_WS_TEMPIMAGES', DIR_WS_IMAGES . "tempimages\\");
-
-    define('DIR_HTTP_USER_IMAGES', DIR_HTTP_IMAGES . "user/");
-    define('DIR_WS_USER_IMAGES', DIR_WS_IMAGES . "user\\");
 
     define('DIR_HTTP_ASSETS', DIR_HTTP_HOME . "assets/");
     define('DIR_WS_ASSETS', DIR_WS_HOME . "assets\\");
@@ -50,23 +35,11 @@ if ($_SERVER['HTTP_HOST'] == "localhost:8000" || $_SERVER['HTTP_HOST'] == "127.0
     define('DIR_HTTP_IMAGES', DIR_HTTP_HOME . "images/");
     define('DIR_WS_IMAGES', DIR_WS_HOME . "images/");
 
-    define('DIR_HTTP_CATEGORY_IMAGES', DIR_HTTP_IMAGES . "category/");
-    define('DIR_WS_CATEGORY_IMAGES', DIR_WS_IMAGES . "category/");
-
-    define('DIR_HTTP_PRODUCT_IMAGES', DIR_HTTP_IMAGES . "product/");
-    define('DIR_WS_PRODUCT_IMAGES', DIR_WS_IMAGES . "product/");
-
-    define('DIR_HTTP_SLIDER_IMAGES', DIR_HTTP_IMAGES . "slider/");
-    define('DIR_WS_SLIDER_IMAGES', DIR_WS_IMAGES . "slider/");
-
     define('DIR_HTTP_CSV', DIR_HTTP_IMAGES . "sample/");
     define('DIR_WS_CSV', DIR_WS_IMAGES . "sample/");
 
     define('DIR_HTTP_UPLOAD', DIR_HTTP_IMAGES . "csv/");
     define('DIR_WS_UPLOAD', DIR_WS_IMAGES . "csv/");
-
-    define('DIR_HTTP_TEMPIMAGES', DIR_HTTP_IMAGES . "tempimages/");
-    define('DIR_WS_TEMPIMAGES', DIR_WS_IMAGES . "tempimages/");
 
     define('DIR_HTTP_ASSETS', DIR_HTTP_HOME . "assets/");
     define('DIR_WS_ASSETS', DIR_WS_HOME . "assets/");

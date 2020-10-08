@@ -19,6 +19,8 @@ Route::post('/loginAuth', 'App\Http\Controllers\DashboardController@loginAuth');
 Route::get('/logout', 'App\Http\Controllers\DashboardController@logout');
 Route::get('/dashboard', 'App\Http\Controllers\DashboardController@dashboard');
 
+Route::post('/upload-csv', 'App\Http\Controllers\ImportController@uploadFile');
+
 Route::post('/get-services-list-ajax', 'App\Http\Controllers\ServiceController@ajaxlist');
 Route::get('/service-list', 'App\Http\Controllers\ServiceController@index');
 Route::get('/add-service', 'App\Http\Controllers\ServiceController@create');
@@ -27,6 +29,8 @@ Route::get('/add-service/{id}', 'App\Http\Controllers\ServiceController@edit');
 Route::post('/service-status-change', 'App\Http\Controllers\ServiceController@changeStatus');
 Route::get('/delete-service/{id}', 'App\Http\Controllers\ServiceController@delete');
 Route::post('/services-export', 'App\Http\Controllers\ServiceController@export');
+Route::get('/import-service', 'App\Http\Controllers\ServiceController@importView');
+Route::get('/service-importave','App\Http\Controllers\ServiceController@importSave');
 
 Route::post('/get-customers-list-ajax', 'App\Http\Controllers\CustomersController@ajaxlist');
 Route::get('/customer-list', 'App\Http\Controllers\CustomersController@index');

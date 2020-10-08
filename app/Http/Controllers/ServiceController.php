@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
+use Illuminate\Support\Facades\Session;
 use function App\Http\draw_action_menu;
 use function App\Http\draw_table_checkbox;
 use function App\Http\export_file_generate;
@@ -17,19 +18,19 @@ class ServiceController extends Controller
     {
         $breadcrumbs = array(
             array(
-                'route'=>'service-list',
-                'title'=>'Services',
-                'active'=>false,
+                'route' => 'service-list',
+                'title' => 'Services',
+                'active' => false,
             ),
             array(
-                'title'=>'Add Service',
-                'active'=>true,
+                'title' => 'Add Service',
+                'active' => true,
             ),
         );
         $data = array(
-            'page_name' => substr(url()->current(), strrpos(url()->current(), '/')),
-            'breadcrumbs'=> $breadcrumbs,
-            'service_id'=>time(),
+            'page_name' => '/service-list',
+            'breadcrumbs' => $breadcrumbs,
+            'service_id' => time(),
         );
         return view('services.add', $data);
     }
@@ -38,25 +39,31 @@ class ServiceController extends Controller
     {
         $breadcrumbs = array(
             array(
-                'title'=>'Services',
-                'active'=>true,
+                'title' => 'Services',
+                'active' => true,
             ),
         );
         $action_buttons = array();
         $action_buttons['Add Service'] = array(
-            'class'=>'btn btn-success',
-            'link'=>'add-service',
-            'icon'=>'fa fa-plus',
+            'class' => 'btn btn-success',
+            'link' => 'add-service',
+            'icon' => 'fa fa-plus',
+        );
+        $action_buttons['Import Service'] = array(
+            'class' => 'btn btn-grey',
+            'link' => 'import-service',
+            'icon' => 'fa fa-upload',
         );
         $data = array(
-            'page_name' => substr(url()->current(), strrpos(url()->current(), '/')),
+            'page_name' => '/service-list',
             'breadcrumbs' => $breadcrumbs,
-            'actions'=>$action_buttons,
+            'actions' => $action_buttons,
         );
         return view('services.index', $data);
     }
 
-    public function ajaxlist(Request $request) {
+    public function ajaxlist(Request $request)
+    {
         $fieldArr = array(
             '',
             'id',
@@ -69,7 +76,7 @@ class ServiceController extends Controller
         $length = $request->input('length');
         $order = $request->input('order')[0]['column'];
         $dir = $request->input('order')[0]['dir'];
-        if(!empty($searchArr)) {
+        if (!empty($searchArr)) {
             $search = $searchArr['keyword'];
         }
         $firebaseController = new FirebaseController();
@@ -79,27 +86,27 @@ class ServiceController extends Controller
         $htmlArray = array();
         $counter = 0;
         $lengthCounter = 0;
-        $sr=$start+1;
-        $recCount=0;
+        $sr = $start + 1;
+        $recCount = 0;
         foreach ($documents as $key => $document) {
-            if(empty($searchArr)) {
+            if (empty($searchArr)) {
                 $recCount++;
             }
-            if($length == $lengthCounter) {
+            if ($length == $lengthCounter) {
                 continue;
             }
-            if ($document->exists() && $key+1 > $start) {
+            if ($document->exists() && $key + 1 > $start) {
                 $service = $document->data();
-                if(isset($search) && !empty($search)) {
-                    if(strpos(strtolower($service['name']), strtolower($search)) === FALSE) {
+                if (isset($search) && !empty($search)) {
+                    if (strpos(strtolower($service['name']), strtolower($search)) === FALSE) {
                         continue;
                     }
                 }
-                if(!empty($searchArr)) {
+                if (!empty($searchArr)) {
                     $recCount++;
                 }
                 $rec = array();
-                $rec['DT_RowId'] = 'serv:'.$service['id'];
+                $rec['DT_RowId'] = 'serv:' . $service['id'];
                 $rec[] = draw_table_checkbox($service['id']);
                 $rec[] = $sr;
                 $rec[] = $service['name'];
@@ -109,13 +116,13 @@ class ServiceController extends Controller
                 <span class='lbl'></span>";
                 $action_links = array();
                 $action_links['Edit'] = array(
-                    'icon'=>'far fa-edit',
-                    'link'=>'add-service/'.$service['id'],
+                    'icon' => 'far fa-edit',
+                    'link' => 'add-service/' . $service['id'],
                 );
                 $action_links['Delete'] = array(
-                    'class'=>'label-danger ajax delete',
-                    'icon'=>'far fa-trash-alt',
-                    'link'=>'delete-service/'.$service['id'],
+                    'class' => 'label-danger ajax delete',
+                    'icon' => 'far fa-trash-alt',
+                    'link' => 'delete-service/' . $service['id'],
                 );
                 $rec[] = draw_action_menu($action_links);
                 $htmlArray[] = $rec;
@@ -133,12 +140,13 @@ class ServiceController extends Controller
         );
     }
 
-    public function insert(Request $req) {
+    public function insert(Request $req)
+    {
         $service_id = $req->input('service_id');
         $mode = $req->input('mode');
         $service_name = $req->input('service_name');
         $service_price = $req->input('service_price');
-        if(empty($service_price)) {
+        if (empty($service_price)) {
             $service_price = 1;
         }
         $service_status = $req->input('service_status');
@@ -149,39 +157,40 @@ class ServiceController extends Controller
         $data = array(
             'id' => $service_id,
             'name' => $service_name,
-            'price' => (double) $service_price,
+            'price' => (double)$service_price,
             'status' => isset($service_status),
         );
         $firebaseController->setDataToCollection($data);
         $message = "Data is added successfully.";
-        if($mode == 'edit') {
+        if ($mode == 'edit') {
             $message = "Data is updated successfully.";
         }
-        if(isset($save_back)) {
+        if (isset($save_back)) {
             return redirect('service-list')->with('success', $message);
-        } else if(isset($save)) {
-            return redirect('add-service/'.$service_id)->with('success', $message);
+        } else if (isset($save)) {
+            return redirect('add-service/' . $service_id)->with('success', $message);
         }
         return null;
     }
 
-    public function edit($id) {
+    public function edit($id)
+    {
         $firebaseController = new FirebaseController();
         $firebaseController->setCollectionAndDocument('services', $id);
         $database = $firebaseController->getData();
         $breadcrumbs = array(
             array(
-                'title'=>'Services',
-                'route'=>'service-list',
-                'active'=>false,
+                'title' => 'Services',
+                'route' => 'service-list',
+                'active' => false,
             ),
             array(
-                'title'=>'Edit Services',
-                'active'=>true,
+                'title' => 'Edit Services',
+                'active' => true,
             ),
         );
         $data = array(
-            'page_name'=>'/service-list',
+            'page_name' => '/service-list',
             'postdata' => $database,
             'service_id' => $database['id'],
             'breadcrumbs' => $breadcrumbs,
@@ -201,7 +210,8 @@ class ServiceController extends Controller
         return new Response('success');
     }
 
-    public function delete($id) {
+    public function delete($id)
+    {
         $firebaseController = new FirebaseController();
         $firebaseController->setCollectionAndDocument('services', $id);
         $firebaseController->deleteDocument();
@@ -216,7 +226,7 @@ class ServiceController extends Controller
         $serviceDocs = $firebaseController->getData();
         $serviceData = array();
         foreach ($serviceDocs as $key => $value) {
-            if(!empty($search)) {
+            if (!empty($search)) {
                 if (strpos($value['name'], $search['keyword']) === FALSE)
                     continue;
             }
@@ -227,11 +237,55 @@ class ServiceController extends Controller
         }
         $fields = array();
         $fields[] = array("service_name" => array("title" => "Service Name", "name" => "service_name"));
-        $fields[] = array("service_price" => array("title" => "Service Amount", "name" => "service_price", 'total' => true, 'datatype'=>'currency'));
+        $fields[] = array("service_price" => array("title" => "Service Amount", "name" => "service_price", 'total' => true, 'datatype' => 'currency'));
         $spreadsheet = export_file_generate($fields, $serviceData, array(
             'sheetTitle' => 'Service Report',
             'headerDate' => 'All',
         ));
         return export_report($spreadsheet, 'all_services.xlsx');
+    }
+
+    public function importView()
+    {
+        $breadcrumbs = array();
+        $breadcrumbs[] = array(
+            'active' => false,
+            'route' => '/service-list',
+            'title' => 'Services',
+        );
+        $breadcrumbs[] = array(
+            'active' => true,
+            'title' => 'Import Services',
+        );
+        $data = array(
+            'downloadLink' => '',
+            'page_name' => '/service-list',
+            'breadcrumbs' => $breadcrumbs,
+        );
+        return view('services.import', $data);
+    }
+
+    public function importSave(Request $req)
+    {
+        $serviceArr = Session::get('record_add');
+        $firebaseController = new FirebaseController();
+        $firebaseController->setCollection('services');
+        $count = 0;
+        foreach ($serviceArr as $service) {
+            $insertArr = array();
+            $id = time();
+            $insertArr['id'] = "$id";
+            $insertArr['name'] = $service['service_name'];
+            $insertArr['price'] = (double) $service['service_amount'];
+            $insertArr['status'] = ($service['status'] == '1');
+            $firebaseController->setDocument($id);
+            $firebaseController->setDataToCollection($insertArr);
+            $count++;
+        }
+        if($count > 0) {
+            return 'success';
+        } else {
+            return 'Error adding records!! Please upload file again.';
+        }
     }
 }

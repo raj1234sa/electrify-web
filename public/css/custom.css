@@ -41,18 +41,6 @@ button, button:focus, button:active {
     border-right: 0.1px #ccc solid !important;
 }
 
-/*#dataTable_next::before {*/
-/*    font-family: "Font Awesome 5 Free";*/
-/*    content: "\f101";*/
-/*    font-weight: 600;*/
-/*}*/
-
-/*#dataTable_previous::before {*/
-/*    font-family: "Font Awesome 5 Free";*/
-/*    content: "\f100";*/
-/*    font-weight: 600;*/
-/*}*/
-
 #dataTable_previous {
     border: none !important;
     border-bottom: 0.1px #ccc solid !important;
@@ -80,28 +68,28 @@ button, button:focus, button:active {
 }
 
 thead > tr,
-thead > tr > th:hover:not(.sorting_disabled) {
+.dataTable thead > tr > th:hover:not(.sorting_disabled) {
     color: white !important;
     background: linear-gradient(to bottom, rgba(67, 142, 185, .6), rgba(67, 142, 185, .9)) !important;
 }
 
-thead > tr > th::after {
+.dataTable thead > tr > th::after {
     color: white !important;
 }
 
-thead > tr > th.sorting_desc,
-thead > tr > th.sorting_asc {
+.dataTable thead > tr > th.sorting_desc,
+.dataTable thead > tr > th.sorting_asc {
     color: white !important;
     background: rgba(67, 142, 185, .9) !important;
 }
 
-thead > tr > th {
+.dataTable thead > tr > th {
     color: white !important;
     border: 1px rgba(67, 142, 185, .7) solid !important;
 }
 
-table,
-tbody > tr > td {
+table.dataTable,
+.dataTable tbody > tr > td {
     border: 0.5px #ccc solid;
 }
 
@@ -133,7 +121,7 @@ tbody > tr > td {
     min-height: 100%;
 }
 
-#dataTable_length {
+.dataTable #dataTable_length {
     padding-top: 0.61em;
 }
 
@@ -154,7 +142,7 @@ tbody > tr > td {
     width: auto;
 }
 
-#dataTable {
+#dataTable.dataTable {
     margin: 0 !important;
     width: 100% !important;
 }
@@ -549,4 +537,26 @@ tbody > tr > td {
 
 .ajaxloader {
     vertical-align: middle;
+}
+
+.summary {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: center;
+}
+
+#rowsuccess {
+    background: #1cc88a;
+    border-radius: 5px;
+    padding: 12px;
+    color: white;
+    font-weight: bold;
+}
+
+#rowskipped {
+    background: red;
+    border-radius: 5px;
+    padding: 12px;
+    color: white;
+    font-weight: bold;
 }

@@ -100,7 +100,26 @@ function show_download_button($url)
 {
     $html = '';
     if (!empty($url)) {
-        $html = "<a href='import_download/$url' class='btn btn-success'><i class='fas fa-download ace-icon'></i>Download File</a>";
+        $html = "<a href='$url' class='btn btn-success' download=''><i class='fas fa-download ace-icon'></i>Download File</a>";
+    }
+    return $html;
+}
+
+function show_upload_button($url)
+{
+    $html = '';
+    $csrf = csrf_token();
+    if (!empty($url)) {
+        $html = '<form id="upload_form" enctype="multipart/form-data">';
+        $html .= "<div class='upload-div'>";
+        $html .= "<a data-upload-route='$url' class='btn btn-success upload-import'><i class='fas fa-upload ace-icon'></i>Upload File</a>";
+        $html .= "</div>";
+        $html .= "<div class='hide'>";
+        $html .= "<input type='text' class='' value='$csrf' name='_token'>";
+        $html .= "<input type='file' class='' name='import_csv' id='import_csv' accept='text/csv'>";
+        $html .= '<label id="fileName"></label>';
+        $html .= "</div>";
+        $html .= '</form>';
     }
     return $html;
 }
